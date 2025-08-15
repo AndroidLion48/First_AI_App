@@ -8,21 +8,12 @@ android {
     namespace = "com.example.firstaiapp"
     compileSdk = 36
 
-//    buildConfigField("String", "API_KEY", localProperties['apiKey'])
-
     defaultConfig {
         applicationId = "com.example.firstaiapp"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
-//        def localPropertiesFile = rootProject.file("local.properties")
-//        def localProperties = new Properties()
-//        localProperties.load(new FileInputStream(localPropertiesFile))
-//        buildConfigField ("String", "API_KEY", API_KEY)
-
-
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
