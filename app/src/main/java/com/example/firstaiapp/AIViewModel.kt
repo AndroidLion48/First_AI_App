@@ -25,20 +25,20 @@ data class AIUiState(
  * Survives configuration changes and provides clean separation of concerns
  */
 class AIViewModel : ViewModel() {
-    
+
     // Private mutable state flow that only the ViewModel can modify
     private val _uiState = MutableStateFlow(AIUiState())
-    
+
     // Public read-only state flow that the UI observes for state changes
     val uiState: StateFlow<AIUiState> = _uiState.asStateFlow()
-    
+
     // Initialize the Gemini AI model
     // TODO: Move API key to BuildConfig or secure storage
     private val generativeModel = GenerativeModel(
         modelName = "gemini-2.5-flash",
-        apiKey = "AIzaSyC5am6FBK1Vlosuvsid5CNk7W9rObZ1KSs"
+        apiKey = "API_KEY_HERE" // Replace with your actual API key
     )
-    
+
     /**
      * Updates the user's prompt text in the UI state
      * Also clears any existing error when user types
@@ -46,7 +46,7 @@ class AIViewModel : ViewModel() {
     fun updatePrompt(prompt: String) {
         _uiState.value = _uiState.value.copy(prompt = prompt, error = null)
     }
-    
+
     /**
      * Generates AI response from the current prompt
      * Handles loading states and error handling
@@ -55,16 +55,16 @@ class AIViewModel : ViewModel() {
     fun generateResponse() {
         val currentPrompt = _uiState.value.prompt
         if (currentPrompt.isBlank()) return
-        
+
         // Set loading state to true and clear any previous errors
         _uiState.value = _uiState.value.copy(isLoading = true, error = null)
-        
+
         // Launch coroutine in viewModelScope (automatically cancelled when ViewModel is destroyed)
         viewModelScope.launch {
             try {
                 // Make API call to generate AI response
                 val response = generativeModel.generateContent(currentPrompt)
-                
+
                 // Update state with successful response
                 _uiState.value = _uiState.value.copy(
                     result = response.text ?: "No response received",
@@ -80,7 +80,7 @@ class AIViewModel : ViewModel() {
             }
         }
     }
-    
+
     /**
      * Clears any error state
      * Useful for dismissing error messages in the UI
