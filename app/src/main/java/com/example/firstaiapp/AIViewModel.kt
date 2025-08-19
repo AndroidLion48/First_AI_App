@@ -36,7 +36,7 @@ class AIViewModel : ViewModel() {
     // TODO: Move API key to BuildConfig or secure storage
     private val generativeModel = GenerativeModel(
         modelName = "gemini-2.5-flash",
-        apiKey = "API_KEY_HERE" // Replace with your actual API key
+        apiKey = "API_KEY_GOES_HERE" // Replace with your actual API key
     )
 
     /**
